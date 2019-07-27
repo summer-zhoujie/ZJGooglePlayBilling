@@ -1,9 +1,9 @@
 # GooglePlayZj
 
-##简介
+## 简介
 基于Google Play进行封装,支持订阅和查询订阅状态两种功能
 
-##使用
+## 使用
 
 ### 1. 集成
 ```
@@ -20,7 +20,7 @@ allprojects {
 	}
 ```
 
-###2. 初始化
+### 2. 初始化
 ```
 public class BaseApplication extends Application {
     @Override
@@ -32,13 +32,13 @@ public class BaseApplication extends Application {
     }
 }
 ```
-###3.订阅
+### 3.订阅
 ```
 PaySdk.getInstance()
                 .setSubListener('$RESULT_BACK')
                 .doSubFlow(activity,skuId);
 ```
-###4.订阅查询
+### 4.订阅查询
 ```
 PaySdk.getInstance()
                 .setQuerySubListener('$RESULT_BACK')
