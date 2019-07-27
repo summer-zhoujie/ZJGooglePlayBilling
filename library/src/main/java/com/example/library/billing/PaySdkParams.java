@@ -6,7 +6,7 @@ import com.example.library.billing.interfaces.OnSubListener;
 /**
  * 为PaySdk提供所需参数
  */
-public class PaySdkParams {
+class PaySdkParams {
 
     OnSubListener subListener;
     OnQuerySubListener querySubListener;

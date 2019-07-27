@@ -237,7 +237,7 @@ public class PaySdk implements PurchasesUpdatedListener {
     }
 
     private boolean paramsCheck() {
-        if (TextUtils.isEmpty(params.getPublicKey())) {
+        if (TextUtils.isEmpty(params.getPublicKey()) || client == null) {
             return false;
         }
 
