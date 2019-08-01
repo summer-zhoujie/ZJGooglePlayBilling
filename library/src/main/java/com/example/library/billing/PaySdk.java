@@ -129,7 +129,8 @@ public class PaySdk implements PurchasesUpdatedListener {
             @Override
             public void onBillingSetupFinished(BillingResult billingResult) {
                 if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
-                    if (client.isFeatureSupported(BillingClient.FeatureType.SUBSCRIPTIONS).getResponseCode() == BillingClient.BillingResponseCode.OK) {
+                    BillingResult featureSupported = client.isFeatureSupported(BillingClient.FeatureType.SUBSCRIPTIONS);
+                    if (featureSupported.getResponseCode() == BillingClient.BillingResponseCode.OK) {
                         ArrayList<String> skuList = new ArrayList<>();
                         skuList.add(skuId);
                         SkuDetailsParams.Builder params = SkuDetailsParams.newBuilder();
@@ -144,7 +145,7 @@ public class PaySdk implements PurchasesUpdatedListener {
                             }
                         });
                     } else {
-                        notifySubListenerIfNotNone(wrapBillingResult(BillingClient.BillingResponseCode.ERROR, "SkuType.SUBS feature is not supported"), null);
+                        notifySubListenerIfNotNone(featureSupported, null);
                     }
                 } else {
                     notifySubListenerIfNotNone(wrapBillingResult(BillingClient.BillingResponseCode.ERROR, billingResult2String(billingResult)), null);
@@ -226,11 +227,17 @@ public class PaySdk implements PurchasesUpdatedListener {
 
     private void startConnectAsyncIfNot(BillingClientStateListener connectListener) {
         if (client != null && client.isReady()) {
+            BillingResult build = BillingResult.newBuilder()
+                    .setResponseCode(BillingClient.BillingResponseCode.OK)
+                    .setDebugMessage("clien `s connect is ready")
+                    .build();
+            connectListener.onBillingSetupFinished(build);
+        } else if (client != null) {
             client.startConnection(connectListener);
         } else {
             BillingResult build = BillingResult.newBuilder()
                     .setResponseCode(BillingClient.BillingResponseCode.OK)
-                    .setDebugMessage("clien `s connect is ready")
+                    .setDebugMessage("clien is null")
                     .build();
             connectListener.onBillingSetupFinished(build);
         }
