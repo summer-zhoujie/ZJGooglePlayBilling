@@ -16,7 +16,7 @@ allprojects {
 ```
 ```
 	dependencies {
-	        implementation 'com.github.jimUpdate:GooglePlayZj:1.0.1'
+	        implementation 'com.github.jimUpdate:GooglePlayZj:1.0.4'
 	}
 ```
 
